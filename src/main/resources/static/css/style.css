@@ -1,0 +1,52 @@
+/* ---------- BUTTON STYLE ------------*/
+.btn-circle {
+    border-radius: 2rem;
+    padding: .5rem 1.5rem .5rem 1.5rem;
+}
+
+.btn-custom {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Optional: Add hover styles for better user experience */
+.btn-custom-outline:hover {
+    background-color: #f8f9fa; /* Light grey on hover */
+    color: black;
+    border-color: #343a40; /* Slightly darker black on hover */
+}
+
+/* ---------- IMG SIZE------------*/
+.img-spring,
+.img-maven{
+    width:18%;
+}
+
+.img-size {
+    width: 11%;
+}
+
+/* Customize font-size*/
+.custom-text-xs { font-size: 0.75rem; }  /* ~12px */
+.custom-text-sm { font-size: 0.875rem; } /* ~14px */
+.custom-text-lg { font-size: 1.25rem; }  /* ~20px */
+.custom-text-xl { font-size: 1.5rem; }   /* ~24px */
+.custom-text-xxl { font-size: 2rem; }    /* ~32px */
+
+/* Custom size for input*/
+
+.custom-input-height {
+    height: 60px;
+    padding: 1rem;
+}
+
+/* Custom CSS to enable scroll on dropdown */
+.dropdown-menu-months {
+    max-height: 100px;   /* Adjust the height based on your needs */
+    overflow-y: auto;    /* This will add a vertical scrollbar */
+}
+
+.dropdown-toggle::after {
+    display: none;
+}

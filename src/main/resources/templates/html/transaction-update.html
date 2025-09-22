@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Powerkicks Taekwondo</title>
+
+    <!-- CSS Bootstrap-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}">
+    <!-- CSS Bootstrap DEVELOPER MODE-->
+    <link rel="stylesheet" href="../../static/css/bootstrap/bootstrap.css">
+
+
+    <!-- CSS Style -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- CSS Style DEVELOPER MODE-->
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row align-items-center min-vh-100">
+        <!--First column-->
+        <div class="col-lg-3 bg-light text-white vh-100" style="padding: 0;">
+            Col-3
+        </div>
+        <!--Second Column (Transaction card form)-->
+        <div class="col-lg-6 d-flex justify-content-center align-items-center vh-100 bg-light">
+
+            <!--Transaction Details FORM-->
+            <div class="card overflow-hidden bg-white shadow-lg rounded-2 border-0 w-75">
+                <!-- Card Header-->
+                <div class="row" th:object="${updateTransaction}">
+                    <div class="col-12 d-inline-flex flex-column justify-content-center align-items-center">
+                        <h4 class="fw-bolder text-center m-3">Update Payment Details</h4>
+                    </div>
+                </div>
+
+                <!-- Card Body-->
+                <div class="card-body">
+
+                    <!-- FORMS (Payment Details)-->
+                    <form th:action="@{/transactions/updatedTransactionDetails}" th:object="${updateTransaction}" class="container" method="POST">
+                        
+                        <!-- id -->
+
+                        <input type="hidden" th:field="*{id}">
+
+                        <!-- FIRST ROW -->
+                        <div class="row g-3">
+                            <!-- First Name-->
+                            <div class="col-6">
+                                <label class="custom-text-xs fw-bold form-label">First Name</label>
+                                <div class="form-floating">
+                                    <input th:field="${updateTransaction.firstName}" type="text" name="firstName" class="fw-bolder form-control custom-input-height" id="floatingFirstName" placeholder="firstName" disabled>
+                                    <label class="custom-text-sm" for="floatingFirstName">Enter your first name</label>
+                                </div>
+                            </div>
+                            <!-- Last name-->
+                            <div class="col-6">
+                                <label class="custom-text-xs fw-bold form-label">Last Name</label>
+                                <div class="form-floating">
+                                    <input th:field="${updateTransaction.lastName}" type="text" name="lastName" class="fw-bolder form-control custom-input-height" id="floatingLastName" placeholder="lastName" disabled>
+                                    <label class="custom-text-sm" for="floatingLastName">Enter your last name</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- SECOND ROW-->
+                        <div class="row g-3">
+                            <!-- Email Address-->
+                            <div class="col-12">
+                                <label class="custom-text-xs fw-bold form-label">Email Address</label>
+                                <div class="form-floating">
+                                    <input th:field="${updateTransaction.emailAddress}" type="text" name="firstName" class="fw-bolder form-control custom-input-height" id="floatingEmail" placeholder="emailAddress" disabled>
+                                    <label class="custom-text-sm" for="floatingEmail">Enter your email address</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- THIRD ROW-->
+                        <div class="row g-3">
+                            <!-- Amount-->
+                            <div class="col-1 d-flex align-items-end justify-content-center">
+                                <h1>₱</h1>
+                            </div>
+
+                            <div class="col-11">
+                                <label class="custom-text-xs fw-bold form-label">Payment Amount</label>
+                                <div class="form-floating">
+                                    <input th:field="${updateTransaction.amount}" type="text" name="firstName" class="fw-bolder form-control custom-input-height" id="floatingAmount" placeholder="paymentAmount">
+                                    <label class="custom-text-sm" for="floatingAmount">Enter the amount</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--BUTTONS-->
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <a th:href="@{/homepage}" type="submit" class="btn btn-danger mt-3 w-100 rounded-0" style="
+                                   --bs-btn-padding-y: .50rem;
+                                   --bs-btn-font-size: .75rem;
+                                   --bs-btn-font-weight: 600;">Cancel</a>
+                            </div>
+
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-success mt-3 w-100 rounded-0" style="
+                                   --bs-btn-padding-y: .50rem;
+                                   --bs-btn-font-size: .75rem;
+                                   --bs-btn-font-weight: 600;">Add Payment</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+            </div>
+        </div>
+        <!--Third column-->
+        <div class="col-lg-3 bg-light text-white vh-100" style="padding: 0;">
+            Col-3
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Javascript Bootstrap-->
+<script th:src="@{/js/bootstrap.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.js}"></script>
+<!-- Javascript Bootstrap DEVELOPER MODE-->
+<script src="../../static/js/bootstrap.js"></script>
+<!-- Bootstrap for our Pop-up(Dropdown menu) -->
+<script src="../../static/js/bootstrap.bundle.js"></script>
+
+
+</body>
+</html>

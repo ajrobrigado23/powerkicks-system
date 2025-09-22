@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Powerkicks Taekwondo Home Page</title>
+
+    <!-- CSS Bootstrap-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}">
+    <!-- CSS Bootstrap DEVELOPER MODE-->
+    <link rel="stylesheet" href="../../static/css/bootstrap/bootstrap.css">
+
+
+    <!-- CSS Style -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- CSS Style DEVELOPER MODE-->
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<body>
+
+    <div class="container-fluid vh-100 d-flex flex-column">
+        <div class="row flex-grow-2 pt-2 pb-2 bg-black">
+            <div class="col-12">
+                <!-- Navbar-->
+                <nav class="navbar navbar-expand">
+                    <div class="container-fluid d-inline-flex justify-content-center">
+
+                        <ul class="nav ms-auto">
+                            <li class="nav-item me-1">
+                                <a class="btn btn-light fw-normal border-0 btn-circle" th:text="${sessionId}" aria-current="page" href="#">Transaction</a>
+                            </li>
+                            <li class="nav-item ms-1 me-1">
+                                <a class="btn btn-outline-light fw-normal btn-circle" href="#">Records</a>
+                            </li>
+                        </ul>
+
+
+                        <ul class="nav ms-auto">
+                            <li class="nav-item">
+                                <form th:action="@{/logout}" method="POST">
+                                    <!-- Logout-->
+                                    <button class="btn btn-danger fw-normal btn-circle text-uppercase" type="submit">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row flex-grow-1">
+            <div class="col-12 vh-auto bg-secondary-subtle p-0">
+                <!-- Dashboard Main Section-->
+                <div class="container-fluid" th:object="${dateAndTime}">
+                    <!-- Dashboard Upper Section-->
+                    <div class="row d-flex justify-content-around mt-3">
+                        <!-- Total Earnings Card-->
+                        <div class="col-2 flex-grow-1">
+                            <div class="card bg-black text-light border-0 rounded-2">
+                                <div class="card-body">
+                                    <p class="card-title fw-bold fs-6">Total Earnings</p>
+                                    <p class="card-text fw-medium h1 text-success">₱<strong th:text="${totalEarnings}"></strong></p>
+                                    <p class="custom-text-sm m-0 p-0">Earnings for this month</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FREE SPACE-->
+                        <div class="col-2 flex-grow-2">
+
+                        </div>
+
+                        <!-- Current Month Card-->
+                        <div class="col-2 flex-grow-2">
+                            <div class="card text-bg-light border-0 rounded-2">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex">
+                                        <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                        <svg class="bi me-2" width="24" height="24" fill="#000000">
+                                            <use th:attr="href=@{/icons/bootstrap-icons.svg#calendar-week-fill}"
+                                                 xlink:href="../../static/icons/bootstrap-icons.svg#calendar-week-fill"></use>
+                                        </svg>
+                                        <p class="card-title fw-medium custom-text-sm">Current Month</p>
+                                    </div>
+                                    <p class="card-text fw-bolder h1 text-primary align-self-end" th:text="*{currentMonth}">July</p>
+                                    <p class="card-text fw-medium align-self-end" th:text="*{currentYear}">2025</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Current Time Card-->
+                        <div class="col-2 flex-grow-2">
+                            <div class="card text-bg-light border-0 rounded-2">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex">
+                                        <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                        <svg class="bi me-2" width="24" height="24" fill="#000000">
+                                            <use th:attr="href=@{/icons/bootstrap-icons.svg#stopwatch-fill}"
+                                                 xlink:href="../../static/icons/bootstrap-icons.svg#stopwatch-fill"></use>
+                                        </svg>
+                                        <p class="card-title fw-medium custom-text-sm">Current Time</p>
+                                    </div>
+                                    <p class="card-text fw-bolder h1 text-primary align-self-end"
+                                       th:text="*{currentTime}"
+                                       id="time-display">12:00</p>
+                                    <p class="card-text fw-medium align-self-end">24-hour format</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2 flex-grow-2">
+                            <div class="card text-bg-light border-0 rounded-2">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex">
+                                        <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                        <svg class="bi me-2" width="24" height="24" fill="#000000">
+                                            <use th:attr="href=@{/icons/bootstrap-icons.svg#file-earmark-medical-fill}"
+                                                 xlink:href="../../static/icons/bootstrap-icons.svg#file-earmark-medical-fill"></use>
+                                        </svg>
+                                        <p class="card-title fw-medium custom-text-sm">Number of Transactions</p>
+                                    </div>
+                                    <p class="card-text fw-bolder h1 text-success align-self-end"
+                                       th:text="${totalTransactions}">1</p>
+                                    <p class="card-text fw-medium align-self-end">For this month</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Dashboard Lower Section - (ADD NEW TRANSACTION SECTION) -->
+                    <div class="row mt-4">
+                        <div class="col-12 d-flex">
+                            <h2 class="me-auto fw-bold">Transaction Details</h2>
+
+                            <!-- Add new transaction button-->
+                            <a th:href="@{/transactions/showTransactionFormAdd}" class="btn btn-success btn-custom rounded-1 me-2 mb-3">
+                                <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                <svg class="bi me-2" width="16" height="16" fill="#FFFFFF">
+                                    <use th:attr="href=@{/icons/bootstrap-icons.svg#plus-circle-fill}"
+                                         xlink:href="../../static/icons/bootstrap-icons.svg#plus-circle-fill"></use>
+                                </svg>
+                                Add New Transaction
+                            </a>
+
+                            <!-- Add existing transaction button-->
+                            <a th:href="@{/transactions/showTransactionFormAdd}" class="btn btn-dark btn-custom rounded-1 mb-3">
+                                <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                <svg class="bi me-2" width="16" height="16" fill="#FFFFFF">
+                                    <use th:attr="href=@{/icons/bootstrap-icons.svg#stack}"
+                                         xlink:href="../../static/icons/bootstrap-icons.svg#stack"></use>
+                                </svg>
+                                Add Existing Transaction
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Transaction details filter Section-->
+                    <div class="row mt-1 mb-3">
+                        <div class="col-12">
+                            <div class="card text-bg-light border-0 rounded-2">
+                                <div class="card-header">
+                                    <p class="fw-medium m-0">Filter Transaction</p>
+                                </div>
+                                <!-- FORM for our filters-->
+                                <!-- Apply filters buttons section (FORM)-->
+                                <form th:action="@{/searchTransactionDetails}" th:object="${transactionRequestDTO}" method="POST">
+                                    <!-- Filter section-->
+                                    <div class="d-flex">
+                                        <!-- Filter Payment Method-->
+                                        <div class="card-body w-50">
+                                            <p class="card-title fs-6">Payment Method</p>
+                                            <!-- Dropdown menu-->
+                                            <div class="dropdown">
+                                                <button class="btn border border-secondary-subtle dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="custom-text-sm" id="dropdownLabel">
+                                                        All Payment Method
+                                                        <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                                        <svg class="bi ms-2" width="16" height="16" fill="black">
+                                                            <use th:attr="href=@{/icons/bootstrap-icons.svg#chevron-down}"
+                                                                 xlink:href="../../static/icons/bootstrap-icons.svg#chevron-down"></use>
+                                                        </svg>
+                                                    </span>
+                                                </button>
+
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <!-- Thymeleaf iterates over the options and creates dropdown items -->
+                                                    <li th:each="payment : ${listOfPaymentMethod}">
+                                                        <a class="dropdown-item w-50" href="#" th:text="${payment}" th:value="${payment}" onclick="updateDropdownMethod(this)"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- Hidden input to hold the selected payment value -->
+                                            <input th:field="${transactionRequestDTO.paymentMethod}" type="hidden" id="selectedPaymentMethod" name="paymentMethod" th:value="${selectedPaymentMethod}">
+                                        </div>
+
+                                        <!-- Filter Payment Month-->
+                                        <div class="card-body w-50">
+                                            <p class="card-title fs-6">Payment Month</p>
+                                            <!-- Dropdown menu-->
+                                            <div class="dropdown">
+                                                <button class="btn border border-secondary-subtle dropdown-toggle" type="button" id="dropdownMenuButtonMonth" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span id="dropdownLabelMonth">
+                                                        All Months
+                                                        <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                                        <svg class="bi ms-2" width="16" height="16" fill="black">
+                                                            <use th:attr="href=@{/icons/bootstrap-icons.svg#chevron-down}"
+                                                                 xlink:href="../../static/icons/bootstrap-icons.svg#chevron-down"></use>
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-months" aria-labelledby="dropdownMenuButtonMonth">
+                                                    <!-- Thymeleaf iterates over the options and creates dropdown items -->
+                                                    <li th:each="month : ${listOfMonths}">
+                                                        <a class="dropdown-item w-50" href="#" th:text="${month}" th:value="${month}" onclick="updateDropdownMonth(this)"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <!-- Hidden input to hold the selected payment value -->
+                                            <input th:field="${transactionRequestDTO.paymentMonth}" type="hidden" id="selectedPaymentMonth" name="paymentMonth" th:value="${selectedPaymentMonth}">
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Filter buttons-->
+                                    <div class="card-body m-0 pt-1 pb-1">
+                                        <button type="submit" class="btn btn-dark btn-custom rounded-1 mb-3">
+                                            <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                            <svg class="bi me-2" width="16" height="16" fill="#FFFFFF">
+                                                <use th:attr="href=@{/icons/bootstrap-icons.svg#clipboard-check-fill}"
+                                                     xlink:href="../../static/icons/bootstrap-icons.svg#clipboard-check-fill"></use>
+                                            </svg>
+                                            Apply Filters
+                                        </button>
+
+                                        <button type="submit" class="btn btn-danger btn-custom rounded-1 mb-3">
+                                            <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                            <svg class="bi me-2" width="16" height="16" fill="#FFFFFF">
+                                                <use th:attr="href=@{/icons/bootstrap-icons.svg#x-circle-fill}"
+                                                     xlink:href="../../static/icons/bootstrap-icons.svg#x-circle-fill"></use>
+                                            </svg>
+                                            Cancel Filters
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Table Section row -->
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card text-bg-light border-0 rounded-2">
+                                <div class="card-header bg-dark text-light">
+                                    <p class="fw-medium m-0">Transactions History</p>
+                                </div>
+                                <!-- Table section-->
+                                <div class="d-flex">
+                                    <div class="card-body">
+                                        <table class = "table table-striped">
+                                            <!-- Table Head-->
+                                            <thead>
+                                                <tr>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Amount Paid</th>
+                                                    <th>Month Paid</th>
+                                                    <th>Payment Method</th>
+                                                    <th class="ms-auto">Actions</th>
+                                                </tr>
+                                            </thead>
+
+                                            <!-- Table Body-->
+                                            <tbody>
+                                                <!-- Loop through the payment details list-->
+                                                <tr th:each="transactionResponse : ${transactionResponseDTO}">
+                                                    <td th:text="${transactionResponse.firstName}">John</td>
+                                                    <td th:text="${transactionResponse.lastName}">Doe</td>
+                                                    <td th:text="${transactionResponse.amount}">1000</td>
+                                                    <td th:text="${transactionResponse.paymentMonth}">July</td>
+
+                                                    <td>
+                                                        <span th:if="${transactionResponse.paymentMethod == 'Monthly'}"
+                                                              th:text="${transactionResponse.paymentMethod}" class="text-light bg-primary ps-3 pe-3 rounded-3 custom-text-sm fw-bolder">
+
+                                                            Monthly</span>
+
+                                                        <span th:if="${transactionResponse.paymentMethod == 'Session'}"
+                                                              th:text="${transactionResponse.paymentMethod}" class="text-light bg-info ps-3 pe-3 rounded-3 custom-text-sm fw-bolder">
+
+                                                        </span>
+                                                    </td>
+
+                                                    <td class="d-flex align-items-center">
+
+                                                        <div>
+                                                            <!-- Button icon for edit-->
+                                                            <a th:href="@{/transactions/updateTransactionDetails(id=${transactionResponse.id})}" type="button" class="ms-1 me-3">
+                                                                <svg class="bi" width="17" height="17" fill="#198754">
+                                                                    <use th:attr="href=@{/icons/bootstrap-icons.svg#send-plus-fill}"
+                                                                         xlink:href="../../static/icons/bootstrap-icons.svg#send-plus-fill"></use>
+                                                                </svg>
+                                                            </a>
+
+                                                            <!-- Button icon for delete-->
+                                                            <a th:href="@{/transactions/deleteTransactionDetails(id=${transactionResponse.id})}" type="button">
+                                                                <svg class="bi" width="16" height="16" fill="#dc3545">
+                                                                    <use th:attr="href=@{/icons/bootstrap-icons.svg#trash-fill}"
+                                                                         xlink:href="../../static/icons/bootstrap-icons.svg#trash-fill"></use>
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+
+                                        <div class="d-flex justify-content-end">
+                                            <a th:href="@{/transactions/showTransactionDetails}" class="btn btn-dark btn-custom rounded-1">
+                                                <!-- Bootstrap using the bootstrap-icons.svg(sprite)-->
+                                                <svg class="bi me-2" width="16" height="16" fill="#FFFFFF">
+                                                    <use th:attr="href=@{/icons/bootstrap-icons.svg#zoom-in}"
+                                                         xlink:href="../../static/icons/bootstrap-icons.svg#zoom-in"></use>
+                                                </svg>
+                                                View All Transactions
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Javascript Bootstrap-->
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.js}"></script>
+    <!-- Javascript Bootstrap DEVELOPER MODE-->
+    <script src="../../static/js/bootstrap.js"></script>
+    <!-- Bootstrap for our Pop-up(Dropdown menu) -->
+    <script src="../../static/js/bootstrap.bundle.js"></script>
+
+    <!-- Custom JavaScript to update the dropdown label and hidden input -->
+    <script>
+        // Transaction METHOD
+        function updateDropdownMethod(item) {
+            // Get the text of the clicked item
+            const selectedPayment = item.innerText;
+
+            // Transaction METHOD
+            // Update the dropdown button's label
+            document.getElementById('dropdownLabel').innerText = selectedPayment;
+
+            // Update the hidden input field to hold the selected value
+            document.getElementById('selectedPaymentMethod').value = selectedPayment;
+        }
+
+        function updateDropdownMonth(item) {
+            // Get the text of the clicked item
+            const selectedMonth = item.innerText;
+
+            // Transaction MONTH
+            // Update the dropdown button's label
+            document.getElementById('dropdownLabelMonth').innerText = selectedMonth;
+
+            // Update the hidden input field to hold the selected value
+            document.getElementById('selectedPaymentMonth').value = selectedMonth;
+        }
+
+        // Function to update the time on the frontend
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById("time-display").textContent = `${hours}:${minutes}`;
+        }
+
+        // Initial update every minute
+        function scheduleNextMinuteUpdate() {
+            const now = new Date();
+            const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+            setTimeout(() => {
+                updateTime();
+                setInterval(updateTime, 60 * 1000); // Then every minute
+            }, msToNextMinute);
+        }
+
+        scheduleNextMinuteUpdate();
+
+    </script>
+
+</body>
+</html>
