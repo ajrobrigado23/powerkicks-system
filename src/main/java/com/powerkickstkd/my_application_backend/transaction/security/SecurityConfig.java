@@ -78,7 +78,7 @@ public class SecurityConfig {
                                 .logoutUrl("/logout")
                                 // Configures the logout success handler to manage what happens after a successful logout
                                 // This custom handler provides specific behavior for post-logout redirection and cleanup
-                                .logoutSuccessUrl("/showMyLoginPage?logout=true")
+                                .logoutSuccessHandler(customLogoutSuccessHandler())
                                 .permitAll()
                 )
                 // Configure exception handling for security-related exceptions
@@ -192,9 +192,34 @@ public class SecurityConfig {
         return new LoginUrlAuthenticationEntryPoint("/showMyLoginPage");
     }
 
-    // TODO: Implement a logout success handler
     @Bean
     public LogoutSuccessHandler customLogoutSuccessHandler() {
-        return null;
+        return new LogoutSuccessHandler() {
+            @Override
+            public void onLogoutSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        Authentication authentication) throws IOException {
+
+                // Get session to store logout success message
+                HttpSession session = request.getSession();
+
+                // Add logout success message to session
+                session.setAttribute("logoutSuccessMessage", "You have been successfully logged out.");
+
+                // Optional: Log the logout event
+                if (authentication != null) {
+                    String username = authentication.getName();
+                    // You can add logging here if needed
+                    System.out.println("User " + username + " has logged out successfully");
+                }
+
+                // Build the redirect URL
+                String redirectUrl = request.getContextPath() + "/showMyLoginPage?logout=true";
+                System.out.println("Redirecting to: " + redirectUrl); // Debug log
+
+                // Redirect to login page with logout parameter
+                response.sendRedirect(redirectUrl);
+            }
+        };
     }
 }
