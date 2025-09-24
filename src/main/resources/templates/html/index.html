@@ -32,9 +32,9 @@
                     <!-- Card Body-->
                     <div class="card-body">
                         <!-- Invalid Username or Password message-->
-                        <div th:if="${param.error}">
-                            <div class="alert alert-danger mx-4" role="alert">
-                                Incorrect username or password.
+                        <div th:if="${errorMessage}">
+                            <div class="alert alert-danger mx-4" role="alert" th:text="${errorMessage}">
+                                Login failed. Please check your credentials.
                             </div>
                         </div>
 
