@@ -19,6 +19,7 @@ public class LoginController {
         HttpSession session = request.getSession();
 
         String loginErrorMessage = (String) session.getAttribute("loginErrorMessage");
+        String logoutSuccessMessage = (String) session.getAttribute("logoutSuccessMessage");
 
         // If there is an error message, add it to the model and clear it from session
         if (loginErrorMessage != null) {
@@ -26,6 +27,13 @@ public class LoginController {
             model.addAttribute("errorMessage", loginErrorMessage);
             // Clear after use
             session.removeAttribute("loginErrorMessage");
+        }
+
+        // If there is a logout success message, add it to the model and clear it from session
+        if (logoutSuccessMessage != null) {
+            model.addAttribute("successMessage", logoutSuccessMessage);
+            // Clear after use
+            session.removeAttribute("logoutSuccessMessage");
         }
 
         return "html/index";

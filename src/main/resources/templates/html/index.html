@@ -39,8 +39,8 @@
                         </div>
 
                         <!-- Successful logout-->
-                        <div th:if="${param.logout}">
-                            <div class="alert alert-primary mx-4" role="alert">
+                        <div th:if="${successMessage}">
+                            <div class="alert alert-primary mx-4" role="alert" th:text="${successMessage}">
                                 You have been logged out
                             </div>
                         </div>
